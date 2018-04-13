@@ -1,0 +1,55 @@
+﻿@model WebApplication1.Models.User
+@{
+    //ViewBag.Title = "Signup";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    fieldset.scheduler-border {
+        border: solid 1px #DDD !important;
+        padding: 0 10px 10px 10px;
+        border-bottom: none;
+    }
+
+    legend.scheduler-border {
+        width: auto !important;
+        border: none;
+        font-size: large;
+        color: cornflowerblue;
+    }
+</style>
+<h2>Signup</h2>
+@using (Html.BeginForm())
+{
+    <div class="container" align="center">
+        <fieldset class="scheduler-border" style="width:265px;">
+            <legend class="scheduler-border">User Info</legend>
+
+            @if (@Model.User_id == 0)
+    {
+        <span>Username @Html.TextBox("username", Model.Username, new { required = "required", placeholder = "Username" })<br><br></span>
+}
+else
+{
+        <span>Username @Html.TextBox("username", Model.Username, new { required = "required", @readonly = "readonly", placeholder = "Username" })<br><br></span>
+}
+            Password @Html.Password("Password", Model.Password, new { required = "required", placeholder = "Password" })<br><br>
+            Fullname @Html.TextBox("Fullname", Model.Fullname, new { placeholder = "Fullname" })<br><br>
+            <span>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.TextBox("Email", Model.Email, new { required = "required", type = "email", placeholder = "example@mail.ru" })<br><br></span>
+            
+            <p align="right">
+                @if (@Model.User_id != 0)
+        {
+            @Html.ActionLink("Back to Home", "Index", new { username = Model.Username });
+        @*<input type="submit" formaction="Index" formnovalidate value="Back to Home" />*@
+}
+else
+{
+        <input type="submit" formaction="Login" formnovalidate value="Back to Login" />
+}
+                &nbsp;&nbsp;<input type="submit" value="Update" />
+            </p>
+            <br />
+            <label class="alert-danger">@ViewBag.ErrorMessage</label>
+        </fieldset>
+    </div>
+}

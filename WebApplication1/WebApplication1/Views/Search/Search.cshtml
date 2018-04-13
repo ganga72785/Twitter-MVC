@@ -1,0 +1,29 @@
+﻿@model WebApplication1.Models.FollowingViewModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+@using (Html.BeginForm())
+{
+    <h2>Search</h2>
+    <h4>List of users based on Search result</h4><br />
+    <table>
+        <tr>
+            <th>User Name</th>
+            <th>Select</th>
+        </tr>
+        @*@foreach (var item in Model)
+            {*@
+        <tr>
+            <td>@Html.TextBoxFor(m => @Model.Current_user_id,"", new { @readonly = true })</td>
+            <td>@Html.TextBoxFor(m => @Model.Username, "", new { @readonly = true })</td>
+            <td>@Html.CheckBoxFor(m => @Model.IsFollowing)</td>
+        </tr>
+        @*}*@
+    </table>
+    <input type="submit"formaction="Submit" value="Submit" />
+}
+

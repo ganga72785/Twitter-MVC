@@ -1,0 +1,90 @@
+﻿@model IEnumerable<WebApplication1.Models.ViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+    WebGrid grid = new WebGrid(Model, ajaxUpdateContainerId: "tblGrid", rowsPerPage: 5); //WebGrid using Ajax
+}
+<style>
+    .time {
+        width: 200px;
+    }
+
+    .Mesage {
+        width: 350px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+   
+</head>
+    <div class="container">
+
+        <div style="height:20px;background-color:lightgoldenrodyellow; text-align:right;">
+            <div>
+                <span style="padding-left:500px;">Welcome <label>@ViewBag.Username</label> &nbsp; <a href="Index">Home</a> |  @Html.ActionLink("Profile", "Signup") | <a href="/Login/Login">Signout</a>  |  <a href="About">Partial</a></span>
+                <textarea hidden="hidden" name="unamedis">@ViewBag.Username</textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    Follow<br />
+                    <input type="text" name="strSearch" placeholder="Search Person" /><input type="submit" formaction="Search" value="Search" />
+                </p>
+            </div>
+            <div class="col-md-8">
+                <p>
+                    What are you doing?<br />
+                    <textarea name="message" style="min-width: 100%" rows="4" cols="75"></textarea><br /><br />
+                    <span style="padding-left:665px"><button formaction="Update" class="btn btn-info">Update</button></span>
+                </p>
+                <br />
+                <label class="alert-danger">@ViewBag.Errormessage</label>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>
+                        <a href="">@ViewBag.Tweets</a> Tweets<br />
+                        <a href="">@ViewBag.Following</a> Following<br />
+                        <a href="">@ViewBag.Follower</a> Followers<br />
+                    </p>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                        Tweets<br />
+                        <div id="tblGrid">
+                            @grid.GetHtml(tableStyle:
+                                             "gTable", columns: grid.Columns(
+                                             grid.Column("Username", "Username", canSort: true, style: "time"),
+                                             grid.Column("Message", header: "Tweets", canSort: true, style: "Mesage"),
+                                             grid.Column("Created", header: "Time", canSort: true, style: "time")), selectedRowStyle: "selectedRow")
+                        </div>
+                        @*<table class="table table-responsive">
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Tweets</th>
+                                    <th>Time</th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Username</td>
+                                        <td style="width:350px">@item.Message</td>
+                                        <td>@item.Created.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            </table>*@
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_Partial");
+
+}
